@@ -44,9 +44,9 @@ async function takeScreenshot() {
             }
         });
 
-        console.log("✅ Screenshot berhasil dibuat.");
+        console.log("Screenshot berhasil dibuat.");
     } catch (error) {
-        console.error("❌ Gagal mengambil screenshot:", error.message);
+        console.error("Gagal mengambil screenshot:", error.message);
         throw error;
     } finally {
         await browser.close();

@@ -57,7 +57,7 @@ Terima kasih.`;
         }
     );
 
-    console.log("✅ Foto berhasil dikirim ke Telegram");
+    console.log("Foto berhasil dikirim ke Telegram");
 
 }
 
