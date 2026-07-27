@@ -1,7 +1,18 @@
 const puppeteer = require("puppeteer");
+const fs = require("fs");
+const path = require("path");
+
 require("dotenv").config();
 
 async function takeScreenshot() {
+
+    // Membuat folder screenshots otomatis jika belum ada
+    const screenshotDir = path.join(__dirname, "..", "screenshots");
+
+    if (!fs.existsSync(screenshotDir)) {
+        fs.mkdirSync(screenshotDir, { recursive: true });
+    }
+
     const browser = await puppeteer.launch({
         headless: "new",
         defaultViewport: {
@@ -11,6 +22,7 @@ async function takeScreenshot() {
     });
 
     try {
+
         const page = await browser.newPage();
 
         await page.goto(process.env.SHEET_URL, {
@@ -20,7 +32,6 @@ async function takeScreenshot() {
         // Tunggu Google Sheets selesai dimuat
         await new Promise(resolve => setTimeout(resolve, 6000));
 
-        // Ambil area tabel Google Sheets
         const element = await page.$(".grid-table-container");
 
         if (!element) {
@@ -33,9 +44,8 @@ async function takeScreenshot() {
             throw new Error("Gagal mendapatkan ukuran tabel.");
         }
 
-        // Screenshot tabel
         await page.screenshot({
-            path: "./screenshots/report.png",
+            path: path.join(screenshotDir, "report.png"),
             clip: {
                 x: boundingBox.x + 46,
                 y: boundingBox.y + 22,
@@ -45,11 +55,16 @@ async function takeScreenshot() {
         });
 
         console.log("Screenshot berhasil dibuat.");
+
     } catch (error) {
+
         console.error("Gagal mengambil screenshot:", error.message);
         throw error;
+
     } finally {
+
         await browser.close();
+
     }
 }
 

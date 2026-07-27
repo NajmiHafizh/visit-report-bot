@@ -1,6 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 const fs = require("fs");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -10,12 +11,15 @@ async function sendPhoto() {
 
     form.append("chat_id", process.env.CHAT_ID);
 
+    // Path screenshot
+    const screenshotPath = path.join(__dirname, "..", "screenshots", "report.png");
+
     form.append(
         "photo",
-        fs.createReadStream("./screenshots/report.png")
+        fs.createReadStream(screenshotPath)
     );
 
-    // Ambil bulan dan tahun otomatis
+    // Bulan dan tahun otomatis
     const now = new Date();
 
     const bulan = [
@@ -37,8 +41,7 @@ async function sendPhoto() {
     const tahun = now.getFullYear();
 
     // Caption
-    const caption =
-`<b>[DAILY REPORT VISITING]</b>
+    const caption = `<b>[DAILY REPORT VISITING]</b>
 
 Selamat sore, mohon izin rekans SOCC dan bapak ibu HOTD.
 
