@@ -49,7 +49,7 @@ async function takeScreenshot() {
             clip: {
                 x: boundingBox.x + 46,
                 y: boundingBox.y + 22,
-                width: 538,
+                width: 780,
                 height: 272
             }
         });
