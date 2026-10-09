@@ -50,7 +50,7 @@ async function takeScreenshot() {
                 x: boundingBox.x + 46,
                 y: boundingBox.y + 22,
                 width: 780,
-                height: 285
+                height: 300
             }
         });
 
